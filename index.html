@@ -653,9 +653,9 @@
 
     try {
       // ★ Google Apps Script URL을 아래에 입력하세요.
-      // const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5CsDCNLWGjxbMtobp2XbsSnM-iYbzcQtIX2oGfYSjOPPhAtGzTkSBHiWftThGH_gV/exec';
-      // const fd = new URLSearchParams(); fd.append("data", JSON.stringify(payload));
-      // await fetch(GOOGLE_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' });
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5CsDCNLWGjxbMtobp2XbsSnM-iYbzcQtIX2oGfYSjOPPhAtGzTkSBHiWftThGH_gV/exec';
+      const fd = new URLSearchParams(); fd.append("data", JSON.stringify(payload));
+      await fetch(GOOGLE_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' });
 
       console.log('전송 데이터:', payload);
 
