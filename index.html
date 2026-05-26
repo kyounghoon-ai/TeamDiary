@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상품기획팀 직무 분석 및 조직 진단</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:   #fdf8f2;
+    --sand:    #f5ede0;
+    --blush:   #f9e4d8;
+    --rose:    #f0c4b0;
+    --peach:   #e8917a;
+    --sage:    #b8cfc0;
+    --sage-d:  #7aa896;
+    --lavender:#d6cfe8;
+    --lav-d:   #9b8fca;
+    --sky:     #c8dff0;
+    --sky-d:   #7baecf;
+    --ink:     #2c2825;
+    --ink-m:   #5a5450;
+    --ink-l:   #8a847e;
+    --border:  #e8ddd4;
+    --white:   #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 14px;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ── HERO HEADER ───────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #fce8de 0%, #f0dff2 40%, #d6e8f5 100%);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 15% 30%, rgba(240,196,176,.45) 0%, transparent 55%),
+      radial-gradient(circle at 85% 70%, rgba(200,223,240,.5) 0%, transparent 55%),
+      radial-gradient(circle at 50% 10%, rgba(214,207,232,.4) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.7);
+    border: 1px solid rgba(255,255,255,.9);
+    backdrop-filter: blur(6px);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--peach);
+    letter-spacing: .05em;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .hero-title {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .hero-title em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--peach), var(--lav-d));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--ink-m);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto 18px;
+    position: relative;
+  }
+  .hero-note {
+    display: inline-block;
+    background: rgba(255,255,255,.8);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 12.5px;
+    color: var(--ink-m);
+    line-height: 1.6;
+    position: relative;
+    max-width: 480px;
+  }
+  .hero-note strong { color: var(--peach); }
+
+  /* ── PROGRESS ──────────────────────────────── */
+  .progress-wrap { max-width: 720px; margin: 20px auto 0; padding: 0 18px; }
+  .progress-bar-bg { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--peach), var(--lav-d)); border-radius: 99px; transition: width .5s ease; width: 0%; }
+  .progress-label { font-size: 11px; color: var(--ink-l); margin-top: 6px; text-align: right; }
+
+  /* ── LAYOUT ────────────────────────────────── */
+  .wrap { max-width: 720px; margin: 18px auto 0; padding: 0 18px; }
+
+  /* ── SECTION CARD ──────────────────────────── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px rgba(0,0,0,.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .card.accent-peach::before  { background: linear-gradient(90deg, var(--rose), var(--peach)); }
+  .card.accent-sage::before   { background: linear-gradient(90deg, var(--sage), var(--sage-d)); }
+  .card.accent-lav::before    { background: linear-gradient(90deg, var(--lavender), var(--lav-d)); }
+  .card.accent-sky::before    { background: linear-gradient(90deg, var(--sky), var(--sky-d)); }
+  .card.accent-mix::before    { background: linear-gradient(90deg, var(--peach), var(--lav-d), var(--sky-d)); }
+
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .ci-peach { background: var(--blush); }
+  .ci-sage  { background: #ddeee7; }
+  .ci-lav   { background: #ece9f5; }
+  .ci-sky   { background: #dceef8; }
+  .ci-mix   { background: linear-gradient(135deg, var(--blush), #ece9f5); }
+
+  .card-ttl { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .card-desc { font-size: 12px; color: var(--ink-l); line-height: 1.65; margin-top: 8px; margin-bottom: 22px; padding-left: 48px; }
+
+  /* ── FORM ATOMS ────────────────────────────── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .fl { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .fl:last-child { margin-bottom: 0; }
+  .fl label {
+    font-size: 12px; font-weight: 600; color: var(--ink-m);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .req { font-size: 10px; color: var(--peach); font-weight: 700; background: var(--blush); padding: 1px 6px; border-radius: 99px; }
+
+  input[type=text], input[type=number], select, textarea {
+    font-family: inherit; font-size: 13.5px; color: var(--ink);
+    background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: 10px; outline: none; transition: all .2s;
+    width: 100%;
+  }
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+    border-color: var(--peach); background: #fff;
+    box-shadow: 0 0 0 3px rgba(232,145,122,.12);
+  }
+  input[type=text], input[type=number], select { height: 42px; padding: 0 13px; }
+  textarea { padding: 12px 13px; resize: vertical; line-height: 1.65; min-height: 90px; }
+  select { cursor: pointer; }
+
+  /* character count */
+  .char-wrap { position: relative; }
+  .char-count { position: absolute; bottom: 10px; right: 12px; font-size: 10px; color: var(--ink-l); pointer-events: none; }
+
+  /* ── STAR RATING ───────────────────────────── */
+  .star-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .star-opt input { display: none; }
+  .star-opt label {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 8px 14px;
+    font-size: 13px; color: var(--ink-m);
+    cursor: pointer; transition: all .18s; font-weight: 500;
+  }
+  .star-opt input:checked + label {
+    background: var(--blush); border-color: var(--peach); color: var(--peach); font-weight: 700;
+  }
+  .star-opt label:hover { border-color: var(--rose); }
+
+  /* ── CHIP SELECT ───────────────────────────── */
+  .chip-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip-opt input { display: none; }
+  .chip-opt label {
+    display: inline-block;
+    background: var(--cream); border: 1.5px solid var(--border);
+    border-radius: 99px; padding: 6px 14px;
+    font-size: 12.5px; color: var(--ink-m);
+    cursor: pointer; transition: all .18s; font-weight: 500;
+  }
+  .chip-opt input:checked + label {
+    background: var(--blush); border-color: var(--peach); color: var(--peach); font-weight: 700;
+  }
+
+  /* ── TASK ITEM ─────────────────────────────── */
+  .task-list { display: flex; flex-direction: column; gap: 10px; }
+  .task-item {
+    background: var(--sand); border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 16px; position: relative;
+  }
+  .task-item-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .task-badge {
+    font-size: 11px; font-weight: 700; color: var(--peach);
+    background: var(--blush); border-radius: 99px; padding: 3px 10px;
+  }
+  .btn-del { background: none; border: none; color: var(--ink-l); cursor: pointer; font-size: 18px; line-height: 1; transition: color .15s; }
+  .btn-del:hover { color: #c0392b; }
+  .task-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 10px; }
+  .btn-add {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; background: var(--cream); border: 1.5px dashed var(--rose);
+    color: var(--peach); padding: 12px; border-radius: 12px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    margin-top: 12px; transition: all .18s; font-family: inherit;
+  }
+  .btn-add:hover { background: var(--blush); border-color: var(--peach); }
+
+  /* ── SUBMIT ────────────────────────────────── */
+  .submit-area { text-align: center; margin-top: 8px; }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--peach) 0%, var(--lav-d) 100%);
+    color: #fff; width: 100%; max-width: 400px;
+    padding: 15px 28px; border-radius: 14px;
+    font-size: 15px; font-weight: 700; cursor: pointer; border: none;
+    font-family: inherit; transition: all .25s;
+    box-shadow: 0 6px 20px rgba(232,145,122,.35);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,145,122,.42); }
+  .btn-submit:disabled { opacity: .65; transform: none; cursor: not-allowed; }
+  .submit-note { font-size: 11.5px; color: var(--ink-l); margin-top: 10px; line-height: 1.5; }
+
+  /* ── TOAST ─────────────────────────────────── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: var(--ink); color: #fff;
+    padding: 13px 26px; border-radius: 12px; font-size: 14px;
+    opacity: 0; transition: all .3s; pointer-events: none; z-index: 999;
+    max-width: 88vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── DIVIDER ───────────────────────────────── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  @media (max-width: 600px) {
+    .g3 { grid-template-columns: 1fr 1fr; }
+    .g3 .span2 { grid-column: 1/-1; }
+    .task-grid { grid-template-columns: 1fr 1fr; }
+    .task-grid .full-w { grid-column: 1/-1; }
+    .card { padding: 20px 16px; }
+    .card-desc { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">🌸 상품기획팀 사전 조사</div>
+  <h1 class="hero-title">직무 분석 &amp; <em>조직 진단</em> 설문</h1>
+  <p class="hero-sub">팀 업무 재조정 및 더 나은 업무 환경을 만들기 위해<br>소중한 의견을 여쭤보는 시간입니다.</p>
+  <div class="hero-note">
+    💬 <strong>솔직하게</strong> 작성해 주실수록 면담에 실질적인 도움이 됩니다.<br>
+    응답 내용은 조직 개선 외 목적으로 활용되지 않아요.
+  </div>
+</div>
+
+<!-- ── PROGRESS ── -->
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill"></div></div>
+  <div class="progress-label" id="prog-label">섹션 0 / 6 완료</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ① 기본 정보 -->
+  <div class="card accent-peach">
+    <div class="card-header">
+      <div class="card-icon ci-peach">👤</div>
+      <div class="card-ttl">1. 기본 정보</div>
+    </div>
+    <p class="card-desc">간단한 기본 정보를 입력해 주세요.</p>
+    <div class="g3">
+      <div class="fl span2">
+        <label>담당 직무</label>
+        <select id="inp-part">
+          <option value="">선택해 주세요</option>
+          <option value="지원">지원 (마감·물류비·권한관리 등)</option>
+          <option value="기획">기획 (실적·손익·회의체 등)</option>
+          <option value="상품가격">상품/가격관리 (신규 등)</option>
+        </select>
+      </div>
+      <div class="fl">
+        <label>성명 <span class="req">필수</span></label>
+        <input type="text" id="inp-name" placeholder="홍길동">
+      </div>
+      <div class="fl">
+        <label>직급</label>
+        <input type="text" id="inp-rank" placeholder="예: 대리">
+      </div>
+      <div class="fl">
+        <label>근속 연수</label>
+        <select id="inp-years">
+          <option value="">선택</option>
+          <option>1년 미만</option>
+          <option>1~3년</option>
+          <option>3~5년</option>
+          <option>5~10년</option>
+          <option>10년 이상</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 현재 담당 업무 M/H -->
+  <div class="card accent-sage">
+    <div class="card-header">
+      <div class="card-icon ci-sage">📋</div>
+      <div class="card-ttl">2. 현재 담당 업무 (M/H 파악)</div>
+    </div>
+    <p class="card-desc">현재 담당하는 핵심 업무들을 구분하여 입력해 주세요. (월 평균 투입 시간 기준)</p>
+    <div id="task-container" class="task-list"></div>
+    <button class="btn-add" onclick="addTask()">＋ 단위 업무 추가하기</button>
+  </div>
+
+  <!-- ③ 업무 강도 & 만족도 -->
+  <div class="card accent-lav">
+    <div class="card-header">
+      <div class="card-icon ci-lav">💜</div>
+      <div class="card-ttl">3. 업무 강도 & 만족도</div>
+    </div>
+    <p class="card-desc">현재 나의 업무 상태를 직관적으로 체크해 주세요.</p>
+
+    <div class="fl">
+      <label>현재 업무량이 적정하다고 느끼시나요?</label>
+      <div class="star-group" id="workload-group">
+        <div class="star-opt"><input type="radio" name="workload" id="wl1" value="매우 과다"><label for="wl1">🔥 매우 과다</label></div>
+        <div class="star-opt"><input type="radio" name="workload" id="wl2" value="다소 과다"><label for="wl2">😓 다소 과다</label></div>
+        <div class="star-opt"><input type="radio" name="workload" id="wl3" value="적정"><label for="wl3">😊 적정</label></div>
+        <div class="star-opt"><input type="radio" name="workload" id="wl4" value="다소 여유"><label for="wl4">😌 다소 여유</label></div>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>현재 담당 업무가 본인의 역량 발휘에 맞다고 느끼시나요?</label>
+      <div class="star-group" id="fitgroup">
+        <div class="star-opt"><input type="radio" name="jobfit" id="jf1" value="매우 그렇다"><label for="jf1">⭐ 매우 그렇다</label></div>
+        <div class="star-opt"><input type="radio" name="jobfit" id="jf2" value="그렇다"><label for="jf2">👍 그렇다</label></div>
+        <div class="star-opt"><input type="radio" name="jobfit" id="jf3" value="보통"><label for="jf3">😐 보통</label></div>
+        <div class="star-opt"><input type="radio" name="jobfit" id="jf4" value="아니다"><label for="jf4">👎 아니다</label></div>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>지금 가장 크게 느끼는 어려움은 무엇인가요? <span style="font-size:11px;color:var(--ink-l)">(복수 선택 가능)</span></label>
+      <div class="chip-group" id="stress-group">
+        <div class="chip-opt"><input type="checkbox" id="st1" value="업무량 과다"><label for="st1">업무량 과다</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st2" value="역할 불명확"><label for="st2">역할 불명확</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st3" value="반복·단순 업무"><label for="st3">반복·단순 업무</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st4" value="소통 어려움"><label for="st4">소통 어려움</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st5" value="성장 기회 부족"><label for="st5">성장 기회 부족</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st6" value="인정·피드백 부족"><label for="st6">인정·피드백 부족</label></div>
+        <div class="chip-opt"><input type="checkbox" id="st7" value="특별히 없음"><label for="st7">특별히 없음</label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 병목 & 과부하 진단 -->
+  <div class="card accent-peach">
+    <div class="card-header">
+      <div class="card-icon ci-peach">⏱️</div>
+      <div class="card-ttl">4. 병목 및 과부하 진단</div>
+    </div>
+    <p class="card-desc">실제 업무 수행 중 겪는 비효율과 고충을 가감 없이 적어주세요.</p>
+
+    <div class="fl">
+      <label>Q1. Time-Killer 업무 &amp; 이유 <span class="req">필수</span></label>
+      <div class="char-wrap">
+        <textarea id="ans-bottleneck1" placeholder="가장 시간이 많이 소요되거나 비효율적이라고 느끼는 업무는 무엇이며, 그 이유는 무엇인가요? (예: 수작업 취합, 중복 보고 등)" oninput="countChars(this,'cc1')"></textarea>
+        <span class="char-count" id="cc1">0자</span>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q2. 대기·정체(Idle) 시간 유발 요인</label>
+      <div class="char-wrap">
+        <textarea id="ans-bottleneck2" placeholder="타 부서 회신·결재 대기, 데이터 수신 지연 등으로 업무가 자주 멈추는 경우가 있다면 구체적으로 적어주세요." oninput="countChars(this,'cc2')"></textarea>
+        <span class="char-count" id="cc2">0자</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ MD 지원 & 업무 재설계 -->
+  <div class="card accent-sky">
+    <div class="card-header">
+      <div class="card-icon ci-sky">🚀</div>
+      <div class="card-ttl">5. MD 지원 및 업무 재설계</div>
+    </div>
+    <p class="card-desc">MD를 더 잘 지원하고, 팀 업무를 발전시키기 위한 아이디어를 청취합니다.</p>
+
+    <div class="fl">
+      <label>Q3. 현장의 목소리 (VOC)</label>
+      <div class="char-wrap">
+        <textarea id="ans-md1" placeholder="상품구매 MD들이 우리 팀에 가장 많이 요구하거나 답답해하는 부분은 주로 무엇인가요?" oninput="countChars(this,'cc3')"></textarea>
+        <span class="char-count" id="cc3">0자</span>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q4. 신규 MD 지원 아이디어 <span class="req">필수</span></label>
+      <div class="char-wrap">
+        <textarea id="ans-md2" placeholder="MD들이 소싱과 가격 경쟁력 확보에 더 집중할 수 있도록, 우리 팀이 새롭게 제공하거나 개선할 수 있는 데이터·프로세스는 무엇이라고 생각하시나요?" oninput="countChars(this,'cc4')"></textarea>
+        <span class="char-count" id="cc4">0자</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="fl">
+      <label>Q5-A. 폐지·이관을 제안하고 싶은 업무</label>
+      <div class="char-wrap">
+        <textarea id="ans-abolish" placeholder="관행적으로 해 왔지만 사실 없애거나 다른 곳으로 넘겨도 된다고 생각하는 업무가 있다면 적어주세요." oninput="countChars(this,'cc5a')" style="min-height:70px"></textarea>
+        <span class="char-count" id="cc5a">0자</span>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q5-B. 새롭게 도전하고 싶은 업무 / 관심 있는 직무</label>
+      <div class="char-wrap">
+        <textarea id="ans-career" placeholder="향후 신설될 '상품전략' 파트를 포함해, 본인이 해 보고 싶은 업무나 성장하고 싶은 방향을 자유롭게 적어주세요." oninput="countChars(this,'cc5b')" style="min-height:70px"></textarea>
+        <span class="char-count" id="cc5b">0자</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 조직 문화 & 소통 -->
+  <div class="card accent-lav">
+    <div class="card-header">
+      <div class="card-icon ci-lav">🌿</div>
+      <div class="card-ttl">6. 조직 문화 및 소통</div>
+    </div>
+    <p class="card-desc">상품BU 및 팀 내부 분위기를 진단하고, 더 좋은 환경을 만들기 위한 의견을 듣습니다.</p>
+
+    <div class="fl">
+      <label>Q6. 조직 분위기 진단 <span class="req">필수</span></label>
+      <div class="char-wrap">
+        <textarea id="ans-culture1" placeholder="'상품BU 전체'의 분위기와 '상품기획팀 내부'의 분위기를 각각 솔직하게 적어주세요." oninput="countChars(this,'cc6')"></textarea>
+        <span class="char-count" id="cc6">0자</span>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q7. 조직 분위기 개선 제안</label>
+      <div class="char-wrap">
+        <textarea id="ans-culture2" placeholder="소통 부재, 업무 편중 등 개선이 필요한 부분이 있다면 무엇이며, 어떤 시도를 해보면 좋을까요? (예: 업무 공유 정례화, 소통 방식 변경 등)" oninput="countChars(this,'cc7')"></textarea>
+        <span class="char-count" id="cc7">0자</span>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q8. 신임 팀장에게 바라는 점 <span class="req">필수</span></label>
+      <div class="char-wrap">
+        <textarea id="ans-leader" placeholder="업무적으로든, 개인적으로든 편하게 적어주세요. (예: 명확한 방향성 제시, 타 부서 업무 조율, 불필요한 회의 축소, 개인 성장 지원 등)" oninput="countChars(this,'cc8')"></textarea>
+        <span class="char-count" id="cc8">0자</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="fl">
+      <label>Q9. 지금 가장 시급하게 해결해 주었으면 하는 것 한 가지</label>
+      <input type="text" id="ans-urgent" placeholder="면담에서 꼭 다루어 주셨으면 하는 한 가지를 짧게 적어주세요.">
+    </div>
+
+    <div class="fl" style="margin-top:4px">
+      <label>Q10. 팀장에게 미리 알리고 싶은 나의 강점 또는 자랑거리 🌟</label>
+      <div class="char-wrap">
+        <textarea id="ans-strength" placeholder="평소 본인이 잘한다고 생각하거나, 팀장이 알아줬으면 하는 나만의 강점이나 경험이 있다면 자유롭게 적어주세요." oninput="countChars(this,'cc10')" style="min-height:70px"></textarea>
+        <span class="char-count" id="cc10">0자</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제출 -->
+  <div class="submit-area">
+    <button class="btn-submit" onclick="submitData()">🌸 설문 제출하기</button>
+    <p class="submit-note">제출 후 내용을 수정하려면 팀장에게 직접 말씀해 주세요.<br>소중한 답변 감사드립니다 💛</p>
+  </div>
+
+</div><!-- /.wrap -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let taskCount = 0;
+  const SECTIONS = 6;
+
+  // ── 진행률 ──
+  function updateProgress() {
+    const filled = [
+      document.getElementById('inp-part').value,
+      document.getElementById('inp-name').value.trim(),
+      document.querySelectorAll('.task-item').length > 0 ? '1' : '',
+      document.querySelector('input[name="workload"]:checked') ? '1' : '',
+      document.getElementById('ans-bottleneck1').value.trim(),
+      document.getElementById('ans-md2').value.trim()
+    ].filter(Boolean).length;
+    const pct = Math.round(filled / SECTIONS * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = `${pct}% 완료`;
+  }
+  document.addEventListener('input', updateProgress);
+  document.addEventListener('change', updateProgress);
+
+  // ── 글자수 ──
+  function countChars(el, counterId) {
+    document.getElementById(counterId).textContent = el.value.length + '자';
+  }
+
+  // ── Task ──
+  window.onload = function() { addTask(); };
+
+  function addTask() {
+    taskCount++;
+    const container = document.getElementById('task-container');
+    const div = document.createElement('div');
+    div.className = 'task-item';
+    div.id = `task-row-${taskCount}`;
+    div.innerHTML = `
+      <div class="task-item-hd">
+        <span class="task-badge">업무 #${taskCount}</span>
+        ${taskCount > 1 ? `<button class="btn-del" onclick="removeTask(${taskCount})" title="삭제">✕</button>` : '<span></span>'}
+      </div>
+      <div class="task-grid">
+        <div class="fl full-w" style="margin-bottom:0">
+          <label>업무명</label>
+          <input type="text" class="t-name" placeholder="예: 월간 물류비 정산">
+        </div>
+        <div class="fl" style="margin-bottom:0">
+          <label>성격</label>
+          <select class="t-type">
+            <option value="핵심전략">핵심 전략</option>
+            <option value="정기보고">정기 보고</option>
+            <option value="단순관리">단순 취합/관리</option>
+          </select>
+        </div>
+        <div class="fl" style="margin-bottom:0">
+          <label>주기</label>
+          <select class="t-cycle">
+            <option value="일별">일별</option>
+            <option value="주별">주별</option>
+            <option value="월별">월별</option>
+            <option value="수시">수시(Ad-hoc)</option>
+          </select>
+        </div>
+        <div class="fl" style="margin-bottom:0">
+          <label>월 투입(시간)</label>
+          <input type="number" class="t-mh" placeholder="M/H" min="0">
+        </div>
+        <div class="fl full-w" style="margin-bottom:0; margin-top:4px">
+          <label>개선 아이디어 <span style="font-size:11px;color:var(--ink-l)">(선택)</span></label>
+          <input type="text" class="t-improve" placeholder="이 업무를 더 효율적으로 바꾸려면? (선택 입력)">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+    updateProgress();
+  }
+
+  function removeTask(id) {
+    const el = document.getElementById(`task-row-${id}`);
+    if (el) el.remove();
+    updateProgress();
+  }
+
+  // ── 제출 ──
+  async function submitData() {
+    const part = document.getElementById('inp-part').value;
+    const name = document.getElementById('inp-name').value.trim();
+    const rank = document.getElementById('inp-rank').value.trim();
+    const years = document.getElementById('inp-years').value;
+
+    if (!part || !name) {
+      showToast('⚠️ 담당 직무와 성명을 입력해 주세요.');
+      return;
+    }
+
+    const taskElements = document.querySelectorAll('.task-item');
+    let tasks = [], isTaskEmpty = false;
+    taskElements.forEach(el => {
+      const tName = el.querySelector('.t-name').value.trim();
+      if (!tName) isTaskEmpty = true;
+      tasks.push({
+        업무명: tName,
+        성격: el.querySelector('.t-type').value,
+        주기: el.querySelector('.t-cycle').value,
+        월투입시간: el.querySelector('.t-mh').value || 0,
+        개선아이디어: el.querySelector('.t-improve').value.trim()
+      });
+    });
+    if (isTaskEmpty) { showToast('⚠️ 업무명을 모두 입력해 주세요.'); return; }
+
+    const workload = document.querySelector('input[name="workload"]:checked')?.value || '';
+    const jobfit   = document.querySelector('input[name="jobfit"]:checked')?.value  || '';
+    const stressChecked = [...document.querySelectorAll('#stress-group input:checked')].map(e => e.value);
+
+    const q1 = document.getElementById('ans-bottleneck1').value.trim();
+    const q4 = document.getElementById('ans-md2').value.trim();
+    const q6 = document.getElementById('ans-culture1').value.trim();
+    const q8 = document.getElementById('ans-leader').value.trim();
+    if (!q1 || !q4 || !q6 || !q8) {
+      showToast('⚠️ 필수 문항(Q1·Q4·Q6·Q8)을 작성해 주세요.');
+      return;
+    }
+
+    const payload = {
+      timestamp: new Date().toLocaleString('ko-KR'),
+      소속: part, 성명: name, 직급: rank, 근속연수: years,
+      담당업무목록: tasks,
+      업무량체감: workload, 직무적합도: jobfit, 주요어려움: stressChecked,
+      서술_타임킬러: q1,
+      서술_대기정체: document.getElementById('ans-bottleneck2').value.trim(),
+      서술_VOC: document.getElementById('ans-md1').value.trim(),
+      서술_MD지원: q4,
+      서술_업무폐지이관: document.getElementById('ans-abolish').value.trim(),
+      서술_커리어: document.getElementById('ans-career').value.trim(),
+      서술_조직분위기: q6,
+      서술_분위기개선: document.getElementById('ans-culture2').value.trim(),
+      서술_팀장요청: q8,
+      서술_시급사항: document.getElementById('ans-urgent').value.trim(),
+      서술_강점자랑: document.getElementById('ans-strength').value.trim()
+    };
+
+    const btn = document.querySelector('.btn-submit');
+    const orig = btn.textContent;
+    btn.textContent = '제출 중…'; btn.disabled = true;
+
+    try {
+      // ★ Google Apps Script URL을 아래에 입력하세요.
+      // const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5CsDCNLWGjxbMtobp2XbsSnM-iYbzcQtIX2oGfYSjOPPhAtGzTkSBHiWftThGH_gV/exec';
+      // const fd = new URLSearchParams(); fd.append("data", JSON.stringify(payload));
+      // await fetch(GOOGLE_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' });
+
+      console.log('전송 데이터:', payload);
+
+      setTimeout(() => {
+        showToast('✅ 설문이 제출되었습니다. 감사합니다! 🌸');
+        btn.textContent = orig; btn.disabled = false;
+        document.getElementById('prog-fill').style.width = '100%';
+        document.getElementById('prog-label').textContent = '100% 완료';
+      }, 900);
+    } catch(e) {
+      showToast('제출 중 오류가 발생했습니다.');
+      btn.textContent = orig; btn.disabled = false;
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+</script>
+</body>
+</html>
