@@ -511,19 +511,34 @@
   let taskCount = 0;
   const SECTIONS = 6;
 
-  // ── 진행률 ──
+  // ── 진행률 (전체 입력 항목 기준) ──
   function updateProgress() {
-    const filled = [
+    const checks = [
+      // 섹션1 기본정보 (3개)
       document.getElementById('inp-part').value,
       document.getElementById('inp-name').value.trim(),
-      document.querySelectorAll('.task-item').length > 0 ? '1' : '',
+      document.getElementById('inp-rank').value.trim(),
+      // 섹션2 업무목록 (1개: 첫 업무명 입력 여부)
+      document.querySelector('.t-name') ? document.querySelector('.t-name').value.trim() : '',
+      // 섹션3 업무강도 (2개)
       document.querySelector('input[name="workload"]:checked') ? '1' : '',
+      document.querySelector('input[name="jobfit"]:checked') ? '1' : '',
+      // 섹션4 병목진단 (2개)
       document.getElementById('ans-bottleneck1').value.trim(),
-      document.getElementById('ans-md2').value.trim()
-    ].filter(Boolean).length;
-    const pct = Math.round(filled / SECTIONS * 100);
+      document.getElementById('ans-bottleneck2').value.trim(),
+      // 섹션5 MD지원 (2개)
+      document.getElementById('ans-md2').value.trim(),
+      document.getElementById('ans-career').value.trim(),
+      // 섹션6 조직문화 (3개)
+      document.getElementById('ans-culture1').value.trim(),
+      document.getElementById('ans-leader').value.trim(),
+      document.getElementById('ans-strength').value.trim(),
+    ];
+    const TOTAL = checks.length; // 13개
+    const filled = checks.filter(Boolean).length;
+    const pct = Math.round(filled / TOTAL * 100);
     document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('prog-label').textContent = `${pct}% 완료`;
+    document.getElementById('prog-label').textContent = `${pct}% 완료 (${filled}/${TOTAL})`;
   }
   document.addEventListener('input', updateProgress);
   document.addEventListener('change', updateProgress);
