@@ -589,7 +589,7 @@
     updateProgress();
   }
 
-  // ── 제출 ──
+// ── 제출 ──
   async function submitData() {
     const part = document.getElementById('inp-part').value;
     const name = document.getElementById('inp-name').value.trim();
@@ -629,11 +629,17 @@
       return;
     }
 
+    // [수정 완료] 취합된 데이터를 하나의 깨끗한 데이터 덩어리로 정의합니다.
     const payload = {
       timestamp: new Date().toLocaleString('ko-KR'),
-      소속: part, 성명: name, 직급: rank, 근속연수: years,
+      소속: part, 
+      성명: name, 
+      직급: rank, 
+      근속연수: years,
       담당업무목록: tasks,
-      업무량체감: workload, 직무적합도: jobfit, 주요어려움: stressChecked,
+      업무량체감: workload, 
+      직무적합도: jobfit, 
+      주요어려움: stressChecked,
       서술_타임킬러: q1,
       서술_대기정체: document.getElementById('ans-bottleneck2').value.trim(),
       서술_VOC: document.getElementById('ans-md1').value.trim(),
@@ -652,24 +658,33 @@
     btn.textContent = '제출 중…'; btn.disabled = true;
 
     try {
-      // ★ Google Apps Script URL을 아래에 입력하세요.
+      // 웜업된 정식 웹 폼 규격(URLSearchParams)으로 데이터를 안전하게 포장하여 쏩니다.
       const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5CsDCNLWGjxbMtobp2XbsSnM-iYbzcQtIX2oGfYSjOPPhAtGzTkSBHiWftThGH_gV/exec';
-      const fd = new URLSearchParams(); fd.append("data", JSON.stringify(payload));
-      await fetch(GOOGLE_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' });
+      const fd = new URLSearchParams(); 
+      fd.append("data", JSON.stringify(payload));
+      
+      await fetch(GOOGLE_SCRIPT_URL, { 
+        method: 'POST', 
+        body: fd, 
+        mode: 'no-cors' 
+      });
 
       console.log('전송 데이터:', payload);
 
-      setTimeout(() => {
-        showToast('✅ 설문이 제출되었습니다. 감사합니다! 🌸');
-        btn.textContent = orig; btn.disabled = false;
-        document.getElementById('prog-fill').style.width = '100%';
-        document.getElementById('prog-label').textContent = '100% 완료';
-      }, 900);
+      showToast('✅ 설문이 제출되었습니다. 감사합니다! 🌸');
+      btn.textContent = orig; 
+      btn.disabled = false;
+      document.getElementById('prog-fill').style.width = '100%';
+      document.getElementById('prog-label').textContent = '100% 완료';
+      
     } catch(e) {
+      console.error('제출 에러:', e);
       showToast('제출 중 오류가 발생했습니다.');
-      btn.textContent = orig; btn.disabled = false;
+      btn.textContent = orig; 
+      btn.disabled = false;
     }
   }
+
 
   function showToast(msg) {
     const t = document.getElementById('toast');
