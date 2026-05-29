@@ -159,6 +159,7 @@
     display: flex; align-items: center; gap: 4px;
   }
   .req { font-size: 10px; color: var(--peach); font-weight: 700; background: var(--blush); padding: 1px 6px; border-radius: 99px; }
+  .opt { font-size: 10px; color: var(--ink-l); font-weight: 500; background: var(--cream); padding: 1px 6px; border-radius: 99px; border: 1px solid var(--border); }
 
   input[type=text], input[type=number], select, textarea {
     font-family: inherit; font-size: 13.5px; color: var(--ink);
@@ -178,7 +179,7 @@
   .char-wrap { position: relative; }
   .char-count { position: absolute; bottom: 10px; right: 12px; font-size: 10px; color: var(--ink-l); pointer-events: none; }
 
-  /* ── STAR RATING ───────────────────────────── */
+  /* ── STAR/SCORE RATING ───────────────────────────── */
   .star-group { display: flex; gap: 6px; flex-wrap: wrap; }
   .star-opt input { display: none; }
   .star-opt label {
@@ -243,6 +244,7 @@
   .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,145,122,.42); }
   .btn-submit:disabled { opacity: .65; transform: none; cursor: not-allowed; }
   .submit-note { font-size: 11.5px; color: var(--ink-l); margin-top: 10px; line-height: 1.5; }
+  .privacy-note { font-size: 12px; color: var(--ink-m); background: #fdf6f0; border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: left; margin-bottom: 14px; font-weight: 500; }
 
   /* ── TOAST ─────────────────────────────────── */
   .toast {
@@ -398,7 +400,7 @@
     </div>
 
     <div class="fl">
-      <label>Q2. 대기·정체(Idle) 시간 유발 요인</label>
+      <label>Q2. 대기·정체(Idle) 시간 유발 요인 <span class="opt">선택</span></label>
       <div class="char-wrap">
         <textarea id="ans-bottleneck2" placeholder="타 부서 회신·결재 대기, 데이터 수신 지연 등으로 업무가 자주 멈추는 경우가 있다면 구체적으로 적어주세요." oninput="countChars(this,'cc2')"></textarea>
         <span class="char-count" id="cc2">0자</span>
@@ -414,10 +416,22 @@
     </div>
     <p class="card-desc">MD를 더 잘 지원하고, 팀 업무를 발전시키기 위한 아이디어를 청취합니다.</p>
 
+    <!-- [추가된 정량적 척도] -->
     <div class="fl">
-      <label>Q3. 현장의 목소리 (VOC)</label>
+      <label>Q3-A. 현재 상품구매 MD 와의 협업 원활도는 몇 점인가요? <span class="req">필수</span></label>
+      <div class="star-group">
+        <div class="star-opt"><input type="radio" name="md_score" id="md_s1" value="1점"><label for="md_s1">1점 😥</label></div>
+        <div class="star-opt"><input type="radio" name="md_score" id="md_s2" value="2점"><label for="md_s2">2점 😕</label></div>
+        <div class="star-opt"><input type="radio" name="md_score" id="md_s3" value="3점"><label for="md_s3">3점 😐</label></div>
+        <div class="star-opt"><input type="radio" name="md_score" id="md_s4" value="4점"><label for="md_s4">4점 🙂</label></div>
+        <div class="star-opt"><input type="radio" name="md_score" id="md_s5" value="5점"><label for="md_s5">5점 😍</label></div>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q3-B. 현장의 목소리 (VOC) 및 위 점수의 사유 <span class="opt">선택</span></label>
       <div class="char-wrap">
-        <textarea id="ans-md1" placeholder="상품구매 MD들이 우리 팀에 가장 많이 요구하거나 답답해하는 부분은 주로 무엇인가요?" oninput="countChars(this,'cc3')"></textarea>
+        <textarea id="ans-md1" placeholder="MD들이 우리 팀에 가장 많이 요구하거나 답답해하는 부분은 무엇인지, 또는 협업이 어떻게 이루어지고 있는지 적어주세요." oninput="countChars(this,'cc3')"></textarea>
         <span class="char-count" id="cc3">0자</span>
       </div>
     </div>
@@ -433,7 +447,7 @@
     <hr class="divider">
 
     <div class="fl">
-      <label>Q5-A. 폐지·이관을 제안하고 싶은 업무</label>
+      <label>Q5-A. 폐지·이관을 제안하고 싶은 업무 <span class="opt">선택</span></label>
       <div class="char-wrap">
         <textarea id="ans-abolish" placeholder="관행적으로 해 왔지만 사실 없애거나 다른 곳으로 넘겨도 된다고 생각하는 업무가 있다면 적어주세요." oninput="countChars(this,'cc5a')" style="min-height:70px"></textarea>
         <span class="char-count" id="cc5a">0자</span>
@@ -441,7 +455,7 @@
     </div>
 
     <div class="fl">
-      <label>Q5-B. 새롭게 도전하고 싶은 업무 / 관심 있는 직무</label>
+      <label>Q5-B. 새롭게 도전하고 싶은 업무 / 관심 있는 직무 <span class="opt">선택</span></label>
       <div class="char-wrap">
         <textarea id="ans-career" placeholder="향후 신설될 '상품전략' 파트를 포함해, 본인이 해 보고 싶은 업무나 성장하고 싶은 방향을 자유롭게 적어주세요." oninput="countChars(this,'cc5b')" style="min-height:70px"></textarea>
         <span class="char-count" id="cc5b">0자</span>
@@ -457,8 +471,25 @@
     </div>
     <p class="card-desc">상품BU 및 팀 내부 분위기를 진단하고, 더 좋은 환경을 만들기 위한 의견을 듣습니다.</p>
 
+    <!-- 안심 문구 추가 -->
+    <div class="privacy-note">
+      🔒 <strong>비밀 보장:</strong> 이 항목은 팀장 본인만 열람하며, 어떠한 경우에도 인사 평가나 불이익으로 연결되지 않음을 약속합니다.
+    </div>
+
+    <!-- [추가된 정량적 척도] -->
     <div class="fl">
-      <label>Q6. 조직 분위기 진단 <span class="req">필수</span></label>
+      <label>Q6-A. 우리 팀의 전반적인 분위기 온도는 몇 점인가요? <span class="req">필수</span></label>
+      <div class="star-group">
+        <div class="star-opt"><input type="radio" name="culture_score" id="cul_s1" value="1점"><label for="cul_s1">1점 🥶</label></div>
+        <div class="star-opt"><input type="radio" name="culture_score" id="cul_s2" value="2점"><label for="cul_s2">2점 춥다</label></div>
+        <div class="star-opt"><input type="radio" name="culture_score" id="cul_s3" value="3점"><label for="cul_s3">3점 미지근</label></div>
+        <div class="star-opt"><input type="radio" name="culture_score" id="cul_s4" value="4점"><label for="cul_s4">4점 따뜻</label></div>
+        <div class="star-opt"><input type="radio" name="culture_score" id="cul_s5" value="5점"><label for="cul_s5">5점 ☀️</label></div>
+      </div>
+    </div>
+
+    <div class="fl">
+      <label>Q6-B. 조직 분위기 진단 세부 사유 <span class="req">필수</span></label>
       <div class="char-wrap">
         <textarea id="ans-culture1" placeholder="'상품BU 전체'의 분위기와 '상품기획팀 내부'의 분위기를 각각 솔직하게 적어주세요." oninput="countChars(this,'cc6')"></textarea>
         <span class="char-count" id="cc6">0자</span>
@@ -466,7 +497,7 @@
     </div>
 
     <div class="fl">
-      <label>Q7. 조직 분위기 개선 제안</label>
+      <label>Q7. 조직 분위기 개선 제안 <span class="opt">선택</span></label>
       <div class="char-wrap">
         <textarea id="ans-culture2" placeholder="소통 부재, 업무 편중 등 개선이 필요한 부분이 있다면 무엇이며, 어떤 시도를 해보면 좋을까요? (예: 업무 공유 정례화, 소통 방식 변경 등)" oninput="countChars(this,'cc7')"></textarea>
         <span class="char-count" id="cc7">0자</span>
@@ -484,12 +515,12 @@
     <hr class="divider">
 
     <div class="fl">
-      <label>Q9. 지금 가장 시급하게 해결해 주었으면 하는 것 한 가지</label>
+      <label>Q9. 지금 가장 시급하게 해결해 주었으면 하는 것 한 가지 <span class="opt">선택</span></label>
       <input type="text" id="ans-urgent" placeholder="면담에서 꼭 다루어 주셨으면 하는 한 가지를 짧게 적어주세요.">
     </div>
 
     <div class="fl" style="margin-top:4px">
-      <label>Q10. 팀장에게 미리 알리고 싶은 나의 강점 또는 자랑거리 🌟</label>
+      <label>Q10. 팀장에게 미리 알리고 싶은 나의 강점 또는 자랑거리 🌟 <span class="opt">선택</span></label>
       <div class="char-wrap">
         <textarea id="ans-strength" placeholder="평소 본인이 잘한다고 생각하거나, 팀장이 알아줬으면 하는 나만의 강점이나 경험이 있다면 자유롭게 적어주세요." oninput="countChars(this,'cc10')" style="min-height:70px"></textarea>
         <span class="char-count" id="cc10">0자</span>
@@ -511,30 +542,29 @@
   let taskCount = 0;
   const SECTIONS = 6;
 
-  // ── 진행률 (전체 입력 항목 기준) ──
+  // ── 진행률 (전체 입력 항목 기준, 추가된 점수 척도 반영) ──
   function updateProgress() {
     const checks = [
-      // 섹션1 기본정보 (3개)
+      // 섹션1 기본정보
       document.getElementById('inp-part').value,
       document.getElementById('inp-name').value.trim(),
       document.getElementById('inp-rank').value.trim(),
-      // 섹션2 업무목록 (1개: 첫 업무명 입력 여부)
+      // 섹션2 업무목록 (첫 업무명)
       document.querySelector('.t-name') ? document.querySelector('.t-name').value.trim() : '',
-      // 섹션3 업무강도 (2개)
+      // 섹션3 업무강도
       document.querySelector('input[name="workload"]:checked') ? '1' : '',
       document.querySelector('input[name="jobfit"]:checked') ? '1' : '',
-      // 섹션4 병목진단 (2개)
+      // 섹션4 병목진단 (Q1 필수)
       document.getElementById('ans-bottleneck1').value.trim(),
-      document.getElementById('ans-bottleneck2').value.trim(),
-      // 섹션5 MD지원 (2개)
+      // 섹션5 MD지원 (Q3 점수, Q4 필수)
+      document.querySelector('input[name="md_score"]:checked') ? '1' : '',
       document.getElementById('ans-md2').value.trim(),
-      document.getElementById('ans-career').value.trim(),
-      // 섹션6 조직문화 (3개)
+      // 섹션6 조직문화 (Q6 점수, Q6 사유, Q8 필수)
+      document.querySelector('input[name="culture_score"]:checked') ? '1' : '',
       document.getElementById('ans-culture1').value.trim(),
-      document.getElementById('ans-leader').value.trim(),
-      document.getElementById('ans-strength').value.trim(),
+      document.getElementById('ans-leader').value.trim()
     ];
-    const TOTAL = checks.length; // 13개
+    const TOTAL = checks.length; // 12개 필수 항목 체크
     const filled = checks.filter(Boolean).length;
     const pct = Math.round(filled / TOTAL * 100);
     document.getElementById('prog-fill').style.width = pct + '%';
@@ -585,11 +615,11 @@
           </select>
         </div>
         <div class="fl" style="margin-bottom:0">
-          <label>월 투입(시간)</label>
-          <input type="number" class="t-mh" placeholder="M/H" min="0">
+          <label>월 투입(H) <span style="font-size:11px;color:var(--ink-l);font-weight:400;margin-left:2px;">(예:매일1H=20H, 매주2H=8H)</span></label>
+          <input type="number" class="t-mh" placeholder="숫자 입력" min="0">
         </div>
         <div class="fl full-w" style="margin-bottom:0; margin-top:4px">
-          <label>개선 아이디어 <span style="font-size:11px;color:var(--ink-l)">(선택)</span></label>
+          <label>개선 아이디어 <span class="opt">선택</span></label>
           <input type="text" class="t-improve" placeholder="이 업무를 더 효율적으로 바꾸려면? (선택 입력)">
         </div>
       </div>
@@ -629,22 +659,34 @@
         개선아이디어: el.querySelector('.t-improve').value.trim()
       });
     });
-    if (isTaskEmpty) { showToast('⚠️ 업무명을 모두 입력해 주세요.'); return; }
+    if (isTaskEmpty) { showToast('⚠️ 단위 업무명을 모두 입력해 주세요.'); return; }
 
     const workload = document.querySelector('input[name="workload"]:checked')?.value || '';
     const jobfit   = document.querySelector('input[name="jobfit"]:checked')?.value  || '';
     const stressChecked = [...document.querySelectorAll('#stress-group input:checked')].map(e => e.value);
 
+    // 신규 추가된 1~5점 척도 값
+    const mdScore = document.querySelector('input[name="md_score"]:checked')?.value || '';
+    const cultureScore = document.querySelector('input[name="culture_score"]:checked')?.value || '';
+
     const q1 = document.getElementById('ans-bottleneck1').value.trim();
     const q4 = document.getElementById('ans-md2').value.trim();
     const q6 = document.getElementById('ans-culture1').value.trim();
     const q8 = document.getElementById('ans-leader').value.trim();
-    if (!q1 || !q4 || !q6 || !q8) {
-      showToast('⚠️ 필수 문항(Q1·Q4·Q6·Q8)을 작성해 주세요.');
+    
+    // 점수 평가 필수 검증 추가
+    if (!q1 || !mdScore || !q4 || !cultureScore || !q6 || !q8) {
+      showToast('⚠️ 누락된 필수 문항(별점 포함)이 있습니다. 확인해 주세요.');
       return;
     }
 
-    // [수정 완료] 취합된 데이터를 하나의 깨끗한 데이터 덩어리로 정의합니다.
+    // Apps Script의 기존 열 배치를 유지하기 위해, 선택한 점수를 텍스트 데이터 앞에 자동으로 결합합니다.
+    const q3Text = document.getElementById('ans-md1').value.trim();
+    const vocCombined = `[협업점수: ${mdScore}] ${q3Text}`;
+
+    const q6Text = document.getElementById('ans-culture1').value.trim();
+    const cultureCombined = `[분위기점수: ${cultureScore}] ${q6Text}`;
+
     const payload = {
       timestamp: new Date().toLocaleString('ko-KR'),
       소속: part, 
@@ -657,11 +699,11 @@
       주요어려움: stressChecked,
       서술_타임킬러: q1,
       서술_대기정체: document.getElementById('ans-bottleneck2').value.trim(),
-      서술_VOC: document.getElementById('ans-md1').value.trim(),
+      서술_VOC: vocCombined,             // 점수와 사유가 결합되어 전송됩니다.
       서술_MD지원: q4,
       서술_업무폐지이관: document.getElementById('ans-abolish').value.trim(),
       서술_커리어: document.getElementById('ans-career').value.trim(),
-      서술_조직분위기: q6,
+      서술_조직분위기: cultureCombined,  // 점수와 사유가 결합되어 전송됩니다.
       서술_분위기개선: document.getElementById('ans-culture2').value.trim(),
       서술_팀장요청: q8,
       서술_시급사항: document.getElementById('ans-urgent').value.trim(),
@@ -673,7 +715,6 @@
     btn.textContent = '제출 중…'; btn.disabled = true;
 
     try {
-      // 웜업된 정식 웹 폼 규격(URLSearchParams)으로 데이터를 안전하게 포장하여 쏩니다.
       const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYGK639fKqqPDp-_kD5t_EvlxINF3Cuz6gUizBCLD86GNxW0fkDDMmfMHgmDzrg2fi/exec';
       const fd = new URLSearchParams(); 
       fd.append("data", JSON.stringify(payload));
@@ -686,11 +727,9 @@
 
       console.log('전송 데이터:', payload);
 
-      // 진행률 바 먼저 업데이트 (wrap 교체 전에)
       document.getElementById('prog-fill').style.width = '100%';
       document.getElementById('prog-label').textContent = '100% 완료';
 
-      // 제출 완료 화면으로 교체
       document.querySelector('.wrap').innerHTML = '<div style="text-align:center;padding:60px 20px;"><div style="font-size:64px;margin-bottom:20px;">🌸</div><h2 style="font-size:22px;font-weight:700;color:#2c2825;margin-bottom:12px;">제출이 완료되었습니다!</h2><p style="font-size:14px;color:#8a847e;line-height:1.8;margin-bottom:32px;">소중한 답변 감사드립니다.<br>면담 시 더욱 알찬 시간이 되도록 잘 활용하겠습니다 💛</p><button onclick="location.reload()" style="background:linear-gradient(135deg,#e8917a,#9b8fca);color:#fff;border:none;border-radius:12px;padding:14px 36px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(232,145,122,.38);">✏️ 다시 작성하기</button><p style="font-size:11.5px;color:#b0aaa4;margin-top:14px;">버튼을 누르면 처음부터 다시 작성할 수 있습니다.</p></div>';
       
     } catch(e) {
@@ -700,7 +739,6 @@
       btn.disabled = false;
     }
   }
-
 
   function showToast(msg) {
     const t = document.getElementById('toast');
